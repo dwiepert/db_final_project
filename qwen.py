@@ -17,7 +17,7 @@ class Qwen:
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
             torch_dtype="auto",
-            device_map="auto"
+            device_map="auto",
         )
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         et = time.time()
@@ -289,13 +289,14 @@ def main():
     parser.add_argument('-s', '--save_dir', default='./outputs')
     parser.add_argument('-d','--dataset_name', default='players')
     parser.add_argument('-l', '--limit', type=int, default=5000)
-    parser.add_argument('-m', '--model_name', default='Qwen/Qwen2.5-7B-Instruct')
+    parser.add_argument('-pt', '--pretrained_path', default='Qwen/Qwen2.5-7B-Instruct')
+    parser.add_argument("-m", "--model_name", default="qwen2.5-14b-instruct")
     args = parser.parse_args()
 
     paths = glob.glob(args.path_ptrn)
     clean_path = [f for f in paths if 'clean' in f][0]
     dirty_paths = [f for f in paths if 'clean' not in f]
-    model = Qwen(model_name=args.model_name)
+    model = Qwen(model_name=args.pretrained_path)
     print('Model loaded')
 
     output_df = None
