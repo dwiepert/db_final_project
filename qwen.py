@@ -144,14 +144,14 @@ class Detector:
             return self._get_players_metadata()
     
     def _get_players_metadata(self):
-        prompt = "The overall_rating column is an integer between 0 and 100. "
+        prompt = "The overall_rating column is a numeric value between 0 and 100. "
         prompt += "The preferred_foot column is either right or left. "
         prompt += "The attacking_work_rate column is one of the following: low, medium, high. "
-        prompt += "The volleys column is an integer between 0 and 100. "
-        prompt += "The free_kick_accuracy column is an integer between 0 and 100. "
+        prompt += "The volleys column is an numeric value between 0 and 100. "
+        prompt += "The free_kick_accuracy column is an numeric value between 0 and 100. "
         prompt += "The player_name column is a value like Aaron Hunt or Stephane M'Bia or Sung-Yeung Ki or Suso or Tulio de Melo or Victor Hugo Montano. "
-        prompt += "The height column is a float value between 120.0 and 250.0. "
-        prompt += "The weight column is an integer value between 100 and 300. "
+        prompt += "The height column is a numeric value value between 120.0 and 250.0. "
+        prompt += "The weight column is an numeric value value between 100 and 300. "
         prompt += "The country column is one of the following values: England, France, Germany, Italy, Spain. "
         prompt += "The league column is one of the following values: England Premier League, France Ligue 1, Germany 1. Bundesliga, Italy Serie A, Spain LIGA BBVA. "
         prompt += "If the league column is 'England Premier League' then the country must be 'England'. "
