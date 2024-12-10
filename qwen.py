@@ -292,6 +292,7 @@ def main():
     parser.add_argument('-l', '--limit', type=int, default=5000)
     parser.add_argument('-pt', '--pretrained_path', default='Qwen/Qwen2.5-7B-Instruct')
     parser.add_argument("-m", "--model_name", default="qwen2.5-14b-instruct")
+    parser.add_argument("-e", "--error_type", default="missing")
     args = parser.parse_args()
 
     paths = glob.glob(args.path_ptrn)
@@ -303,6 +304,9 @@ def main():
     output_df = None
 
     for d in dirty_paths:
+        error_type = os.path.splitext(d.split(sep="_")[-1])[0]
+        if error_type != args.error_type:
+            continue
         num_differences = compare_csv_files(d, clean_path, limit=args.limit)
         error_type = os.path.splitext(d.split(sep="_")[-1])[0]
         print(f'Num differences between {os.path.basename(d)} and {os.path.basename(clean_path)}: {num_differences}')
