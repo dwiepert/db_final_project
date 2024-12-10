@@ -305,8 +305,6 @@ def main():
 
     for d in dirty_paths:
         error_type = os.path.splitext(d.split(sep="_")[-1])[0]
-        if error_type != args.error_type:
-            continue
         num_differences = compare_csv_files(d, clean_path, limit=args.limit)
         error_type = os.path.splitext(d.split(sep="_")[-1])[0]
         print(f'Num differences between {os.path.basename(d)} and {os.path.basename(clean_path)}: {num_differences}')
