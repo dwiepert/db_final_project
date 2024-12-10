@@ -5,6 +5,7 @@ import csv
 import glob
 import os
 import pandas as pd
+import time
 from transformers import AutoModelForCausalLM, AutoTokenizer
 #requires torch, accelerate
 
@@ -12,12 +13,15 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 class Qwen:
     def __init__(self, model_name="Qwen/Qwen2.5-1.5B-Instruct"):
         self.model_name = model_name
+        st = time.time()
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
             torch_dtype="auto",
             device_map="auto"
         )
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        et = time.time()
+        print(f'{(et-st)/60} s elapsed loading model')
 
     def __call__(self, prompt):
         messages = [
@@ -35,7 +39,7 @@ class Qwen:
 
         generated_ids = self.model.generate(
             **model_inputs,
-            max_new_tokens=512
+            max_new_tokens=2000
         )
         generated_ids = [
             output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
@@ -237,8 +241,13 @@ class Evaluate:
                 printres = True
             else:
                 printres = False
+            if i % 100 == 0:
+                st = time.time()
             reported_error_columns = detector.help_get_response(dirty_row, self.header,dataset_type='players', printres=printres)
-          
+
+            if i % 100 == 0:
+                et = time.time()
+                print(f"{(et-st)/60} minutes elapsed generating response")
             for col in reported_error_columns:
                 if is_fn and 'country' in error_columns:
                     if col == 'league':
@@ -279,8 +288,8 @@ def main():
     parser.add_argument('-p', '--path_ptrn', default='./new_datasets/players/*.csv')
     parser.add_argument('-s', '--save_dir', default='./outputs')
     parser.add_argument('-d','--dataset_name', default='players')
-    parser.add_argument('-l', '--limit', type=int, default=2)
-    parser.add_argument('-m', '--model_name', default='Qwen/Qwen2.5-1.5B-Instruct')
+    parser.add_argument('-l', '--limit', type=int, default=5000)
+    parser.add_argument('-m', '--model_name', default='Qwen/Qwen2.5-7B-Instruct')
     args = parser.parse_args()
 
     paths = glob.glob(args.path_ptrn)
@@ -296,8 +305,8 @@ def main():
         error_type = os.path.splitext(d.split(sep="_")[-1])[0]
         print(f'Num differences between {os.path.basename(d)} and {os.path.basename(clean_path)}: {num_differences}')
         ds = Dataset(dirty_file_path=d, clean_file_path=clean_path)
-        col_detector = Detector(model, model_type='qwen2.5-1.5B-Instruct', detection_type='column')
-        md_detector = Detector(model, model_type='qwen2.5-1.5B-Instruct', detection_type='metadata')
+        col_detector = Detector(model, model_type=args.model_name.lower(), detection_type='column')
+        md_detector = Detector(model, model_type=args.model_name.lower(), detection_type='metadata')
         evaluator = Evaluate(ds)
         col_outputs = evaluator.eval(col_detector, limit=args.limit)
         col_outputs['dirty_file'] = [d]
