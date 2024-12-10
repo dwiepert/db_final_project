@@ -1,0 +1,3 @@
+recall,precision,f1,num_errors,num_reported_errors,num_correct_reported_errors,dirty_file,clean_file,dataset,prompt,error_type,num_differences
+0,0.0,0,0,1,0,./new_datasets/players/players_outliers.csv,./new_datasets/players/players_clean.csv,players,column,outliers,0
+0,0.0,0,0,0,0,./new_datasets/players/players_outliers.csv,./new_datasets/players/players_clean.csv,players,metadata,outliers,0
