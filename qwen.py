@@ -243,6 +243,7 @@ class Evaluate:
                 printres = False
             if i % 100 == 0:
                 st = time.time()
+                print(st)
             reported_error_columns = detector.help_get_response(dirty_row, self.header,dataset_type='players', printres=printres)
 
             if i % 100 == 0:
