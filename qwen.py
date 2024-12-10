@@ -39,7 +39,7 @@ class Qwen:
 
         generated_ids = self.model.generate(
             **model_inputs,
-            max_new_tokens=2000
+            max_new_tokens=400
         )
         generated_ids = [
             output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
