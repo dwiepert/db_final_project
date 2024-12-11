@@ -1,0 +1,3 @@
+recall,precision,f1,num_errors,num_reported_errors,num_correct_reported_errors,dirty_file,clean_file,dataset,prompt,error_type,num_differences
+0.36454849498327757,0.017157248543994964,0.032772098616957304,299,6353,109,./new_datasets/players/players_typos.csv,./new_datasets/players/players_clean.csv,players,column,typos,298
+0.391304347826087,0.019703603907039405,0.03751803751803751,299,5938,117,./new_datasets/players/players_typos.csv,./new_datasets/players/players_clean.csv,players,metadata,typos,298

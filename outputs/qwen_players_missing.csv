@@ -1,0 +1,3 @@
+recall,precision,f1,num_errors,num_reported_errors,num_correct_reported_errors,dirty_file,clean_file,dataset,prompt,error_type,num_differences
+0.42452830188679247,0.1352479545834029,0.20514119285804738,1908,5989,810,./new_datasets/players/players_missing.csv,./new_datasets/players/players_clean.csv,players,column,missing,1499
+0.45073375262054505,0.14658258053519688,0.2212218649517685,1908,5867,860,./new_datasets/players/players_missing.csv,./new_datasets/players/players_clean.csv,players,metadata,missing,1499

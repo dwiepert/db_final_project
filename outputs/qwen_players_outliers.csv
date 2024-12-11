@@ -1,0 +1,3 @@
+recall,precision,f1,num_errors,num_reported_errors,num_correct_reported_errors,dirty_file,clean_file,dataset,prompt,error_type,num_differences
+0.3212669683257919,0.02350604204601887,0.04380687953108129,442,6041,142,./new_datasets/players/players_outliers.csv,./new_datasets/players/players_clean.csv,players,column,outliers,442
+0.31447963800904977,0.02500449721172873,0.04632561239793368,442,5559,139,./new_datasets/players/players_outliers.csv,./new_datasets/players/players_clean.csv,players,metadata,outliers,442
