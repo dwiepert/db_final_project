@@ -178,7 +178,6 @@ class Detector:
     
     def help_get_response(self, row, header, dataset_type="players", printres=True):
         prompt = self._generate_prompt(row, header, dataset_type)
-
         if 'qwen' in self.model_type:
             phrases = self._get_qwen_phrases()
         else:
@@ -289,7 +288,7 @@ def main():
     parser.add_argument('-p', '--path_ptrn', default='./new_datasets/players/*.csv')
     parser.add_argument('-s', '--save_dir', default='./outputs')
     parser.add_argument('-d','--dataset_name', default='players')
-    parser.add_argument('-l', '--limit', type=int, default=5000)
+    parser.add_argument('-l', '--limit', type=int, default=1)
     parser.add_argument('-pt', '--pretrained_path', default='Qwen/Qwen2.5-7B-Instruct')
     parser.add_argument("-m", "--model_name", default="qwen2.5-14b-instruct")
     parser.add_argument("-e", "--error_type", default="missing")
@@ -304,6 +303,8 @@ def main():
     output_df = None
 
     for d in dirty_paths:
+
+
         error_type = os.path.splitext(d.split(sep="_")[-1])[0]
         num_differences = compare_csv_files(d, clean_path, limit=args.limit)
         error_type = os.path.splitext(d.split(sep="_")[-1])[0]
